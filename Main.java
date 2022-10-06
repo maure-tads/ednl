@@ -1,13 +1,18 @@
+import java.util.List;
+
 public class Main {
 	public static void main(String[] args) {
 		System.out.println("Its Working!");
 		BinarySearchTree bst = new BinarySearchTree();
-		bst.insert(10);
-		bst.insert(12);
-		bst.insert(9);
-		bst.insert(8);
-		bst.insert(11);
+		Integer numeros[] = {4,1,8,5,9,10,7,3};
+		for(Integer i : numeros)
+			bst.insert(i);
 
-		bst.inOrderPrint();
+
+		for(Integer i : bst.preOrderList())
+			System.out.print(i + " ");
+
+
+		System.out.println();
 	}
 }

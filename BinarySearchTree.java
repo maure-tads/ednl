@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class BinarySearchTree {
 
 	private Node root;
@@ -22,16 +25,84 @@ public class BinarySearchTree {
 		}
 	}
 
-	public void inOrderPrint() {
-		inOrderPrint(root);
+	public Integer height() {
+		return height(root);
 	}
 
-	private void inOrderPrint(Node n) {
-		if(n == null) return;
-		inOrderPrint(n.getLeft());
-		System.out.println(n.getKey());
-		inOrderPrint(n.getRight());
+	public Integer height(Node n) {
+		if(n == null) {
+			return 1;
+		}
+		int leftHeight = height(n.getLeft());
+		int rightHeight = height(n.getRight());
+		return leftHeight > rightHeight ? leftHeight : rightHeight;
 	}
+
+
+
+
+	public void print() {
+		List<Integer> lista = inOrderList();
+		int height = height();
+
+		for(int i = 0; i < height; i++) {
+
+		}
+	}
+
+	public List<Integer> inOrderList() {
+		return inOrderList(root);
+	}
+
+	private List<Integer> inOrderList(Node n) {
+		List<Integer> l = new ArrayList();
+		if(n != null) {
+			l.addAll(inOrderList(n.getLeft()));
+			l.add(n.getKey());
+			l.addAll(inOrderList(n.getRight()));
+		}
+		return l;
+	}
+
+	
+	public List<Integer> inOrderList() {
+		return inOrderList(root);
+	}
+
+	private List<Integer> inOrderList(Node n) {
+		List<Integer> l = new ArrayList();
+		if(n != null) {
+			l.addAll(inOrderList(n.getLeft()));
+			l.add(n.getKey());
+			l.addAll(inOrderList(n.getRight()));
+		}
+		return l;
+	}
+
+
+	public List<Integer> preOrderList() {
+		return preOrderList(root);
+	}
+
+	private List<Integer> preOrderList(Node n) {
+		List<Integer> l = new ArrayList();
+		if(n != null) {
+			l.add(n.getKey());
+			l.addAll(preOrderList(n.getLeft()));
+			l.addAll(preOrderList(n.getRight()));
+		}
+		return l;
+	}
+
+	public void print() {
+		print(root);
+	}
+
+	
+	public void print(Node n) {
+		
+	}
+
 
 
 

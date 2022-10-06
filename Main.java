@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Map;
 
 public class Main {
 	public static void main(String[] args) {
@@ -12,6 +13,9 @@ public class Main {
 		for(Integer i : bst.preOrderList())
 			System.out.print(i + " ");
 
+		System.out.println();
+
+		bst.fullPrint();
 
 		System.out.println();
 	}

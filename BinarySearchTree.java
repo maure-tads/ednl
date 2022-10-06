@@ -1,5 +1,8 @@
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class BinarySearchTree {
 
@@ -35,19 +38,7 @@ public class BinarySearchTree {
 		}
 		int leftHeight = height(n.getLeft());
 		int rightHeight = height(n.getRight());
-		return leftHeight > rightHeight ? leftHeight : rightHeight;
-	}
-
-
-
-
-	public void print() {
-		List<Integer> lista = inOrderList();
-		int height = height();
-
-		for(int i = 0; i < height; i++) {
-
-		}
+		return leftHeight > rightHeight ? leftHeight + 1 : rightHeight + 1;
 	}
 
 	public List<Integer> inOrderList() {
@@ -55,7 +46,7 @@ public class BinarySearchTree {
 	}
 
 	private List<Integer> inOrderList(Node n) {
-		List<Integer> l = new ArrayList();
+		List<Integer> l = new ArrayList<Integer>();
 		if(n != null) {
 			l.addAll(inOrderList(n.getLeft()));
 			l.add(n.getKey());
@@ -65,42 +56,58 @@ public class BinarySearchTree {
 	}
 
 	
-	public List<Integer> inOrderList() {
-		return inOrderList(root);
-	}
-
-	private List<Integer> inOrderList(Node n) {
-		List<Integer> l = new ArrayList();
-		if(n != null) {
-			l.addAll(inOrderList(n.getLeft()));
-			l.add(n.getKey());
-			l.addAll(inOrderList(n.getRight()));
-		}
-		return l;
-	}
-
-
 	public List<Integer> preOrderList() {
 		return preOrderList(root);
 	}
 
 	private List<Integer> preOrderList(Node n) {
-		List<Integer> l = new ArrayList();
+		List<Integer> l = new ArrayList<Integer>();
 		if(n != null) {
+			l.addAll(inOrderList(n.getLeft()));
 			l.add(n.getKey());
-			l.addAll(preOrderList(n.getLeft()));
-			l.addAll(preOrderList(n.getRight()));
+			l.addAll(inOrderList(n.getRight()));
 		}
 		return l;
 	}
 
-	public void print() {
-		print(root);
+	public void fullPrint() {
+		List<List<Integer>> nodes = fullPrint(root, 0);
+		int height = height();
+		System.out.println(height);
+		nodes.sort(Comparator.comparing(n-> n.get(0)));
+		int nivel = 0;
+		for(List<Integer> n : nodes) {
+			System.out.println(n.get(0) + ": " + n.get(1));
+		}
+		for(List<Integer> n : nodes) {
+			if(nivel != n.get(0)) {
+				nivel++;
+				System.out.println();
+				height--;
+			}
+			for(int i = 0; i < height; i++) {
+				System.out.print("    ");
+			}
+			System.out.print(n.get(1));
+			for(int i = 0; i < height; i++) {
+				System.out.print("    ");
+			}
+		}
+
 	}
 
-	
-	public void print(Node n) {
-		
+
+	private List<List<Integer>> fullPrint(Node n, Integer nivel) {
+		List<List<Integer>> l = new ArrayList<List<Integer>>();
+		if(n != null) {
+			List<Integer> tempList = new ArrayList<Integer>();
+			tempList.add(nivel);
+			tempList.add(n.getKey());
+			l.add(tempList);
+			l.addAll(fullPrint(n.getLeft(), nivel+1));
+			l.addAll(fullPrint(n.getRight(), nivel+1));
+		}
+		return l;
 	}
 
 

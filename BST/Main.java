@@ -8,11 +8,15 @@ public class Main {
 
         Scanner sc = new Scanner(System.in);
         int i = 1;
-        while(i >= 0) {
+        while(i != 0) {
             System.out.print(": ");
             i = sc.nextInt();
             System.out.println();
-            bst.insert(i);
+            if(i < 0) {
+                bst.delete(i*-1);
+            } else {
+                bst.insert(i);
+            }
             bst.mostrarArvore();
             System.out.println();
         }

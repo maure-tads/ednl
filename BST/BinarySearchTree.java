@@ -88,36 +88,33 @@ public class BinarySearchTree {
     }
 
     private Node delete(Node n) {
-        boolean isLeftChild = n.getParent().getLeft() == n;
-        if(n.getLeft() == null && n.getRight() == null) {
-            if(isLeftChild) {
-                n.getParent().setLeft(null);
-            } else {
-                n.getParent().setRight(null);
-            }
-        } else if(n.getLeft() == null || n.getRight() == null) {
-            if(isLeftChild) {
-                n.getParent().setLeft(Objects.isNull(n.getLeft()) ? n.getRight() : n.getLeft());
-                n.getParent().getLeft().setParent(n.getParent());
-            } else {
-                n.getParent().setRight(Objects.isNull(n.getRight()) ? n.getLeft() : n.getRight());
-                n.getParent().getRight().setParent(n.getParent());
-            }
+        Node y =  n.getLeft() == null || n.getRight() == null ? n : sucessor(n);
+        Node x = y.getLeft() == null ? y.getRight() : y.getLeft();
+        if(x != null) x.getParent().setParent(y.getParent());
+
+        if(isRoot(y)) {
+            root = x;
+        } else if (isLeftChild(y)) {
+            y.getParent().setLeft(x);
         } else {
-            Node s = sucessor(n);
-            if(isLeftChild) {
-                n.getParent().setLeft(s);
-                s.setParent(n.getParent());
-                n.getLeft().setParent(s);
-                s.setLeft(n.getLeft());
-            } else {
-                n.getParent().setRight(s);
-                s.setParent(n.getParent());
-                n.getRight().setParent(s);
-                s.setRight(n.getRight());
-            }
+            y.getParent().setRight(x);
         }
-        return n;
+
+        if(n != y) {
+            n.setData(y.getData());
+            n.setLeft(y.getLeft());
+            n.setRight(y.getRight());
+            n.setParent(y.getParent());
+        }
+        return y;
+    }
+
+    private boolean isRoot(Node n) {
+        return n.getParent() == null;
+    }
+
+    private boolean isLeftChild(Node n) {
+        return n.getParent().getLeft() == n;
     }
 
 

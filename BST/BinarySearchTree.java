@@ -88,27 +88,16 @@ public class BinarySearchTree {
     }
 
     private Node delete(Node n) {
-        Node y = n.getLeft() == null || n.getRight() == null ? n : sucessor(n);
-        Node x = y.getLeft() != null ? y.getLeft() : y.getRight(); 
-        if(x != null) x.setParent(y.getParent());
-        //System.out.println(x + " " + x.getData());
-
-        if(isRoot(y)) {
-            root = x;
-        } else if (isLeftChild(y)) {
-            y.getParent().setLeft(x);
+        if(n.getLeft() != null && n.getRight() != null) {
+            z = sucessor(n);
+        } else if(n.getLeft() != null) {
+            n.getLeft().setParent(n.getParent());
+            n.getParent().setLeft(n.getLeft());
         } else {
-            y.getParent().setRight(x);
-        } 
-
-        if(n != y) {
-            System.out.println("HELP ME");
-            n.setData(y.getData());
-            n.setRight(y.getRight());
-            //n.setLeft(y.getLeft());
-            //n.setParent(y.getParent());
+            n.setParent(z);
         }
-        return y;
+
+
     }
 
     private boolean isRoot(Node n) {

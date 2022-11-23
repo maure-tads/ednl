@@ -5,19 +5,11 @@ public class RedBlackNode extends Node {
   private RedBlackNode right;
   private RedBlackNode parent;
 
+  private boolean NIL = false;
+
   public RedBlackNode(Integer data) {
     super(data);
   }
-
-  public static RedBlackNode Builder(Integer data, Node left, Node right, Node parent) {
-    RedBlackNode n = new RedBlackNode(data);
-    n.setLeft(left);
-    n.setRight(right);
-    n.setParent(parent);
-    return n;
-  }
-
-
   public void setBlack() {
     this.red = false;
   }
@@ -69,5 +61,22 @@ public class RedBlackNode extends Node {
   public boolean isLeftChild() {
     return getParent().getLeft() == this;
   }
+
+
+  public static RedBlackNode BuildNIL() {
+    RedBlackNode n = new RedBlackNode(null);
+    n.setBothChildren(null);
+    n.setBlack();
+    n.setAsNIL();
+    return n;
+  }
+
+  private void setAsNIL() {
+    this.NIL = true;
+  }
+  public boolean isNIL() {
+    return NIL;
+  }
+
 
 }

@@ -3,15 +3,10 @@ public class RedBlackTree extends BinarySearchTree {
     private RedBlackNode NIL;
 
     public RedBlackTree() {
-        initNIL();
+        this.NIL = RedBlackNode.BuildNIL();
         this.root = NIL;
     }
 
-    private void initNIL() {
-        RedBlackNode n = new RedBlackNode(null);
-        this.NIL = n;
-        this.NIL.setBlack();
-    }
 
     private boolean isNIL(RedBlackNode n) {
         return n == NIL;
@@ -58,21 +53,38 @@ public class RedBlackTree extends BinarySearchTree {
             p.setRight(k);
         }
         nodeCounter++;
-        colorCorretion(k);
+        rbFix(k);
         return k;
     }
 
-    private void colorCorretion(RedBlackNode z) {
-        RedBlackNode p = z.getParent();
-        RedBlackNode g = p.getParent() != NIL ? z.getParent() : null;
-        if(g != null) {
-            RedBlackNode u = g.getLeft() == p ? g.getRight() : g.getLeft();
-            if(u.isRed())  {
-                System.out.println("Caso 1: o tio de z é vermelho");
-            } else {
+    private void rbFix(RedBlackNode z) {
+        RedBlackNode w = z.getParent();
+        RedBlackNode t = !w.isNIL() && w.isBlack() ? z.getParent() : null;
+        if(t != null) {
+            RedBlackNode u = t.getLeft() == w  ? t.getRight() : t.getLeft();
+            /* – Caso 2: Suponha w(pai de v) rubro e t, o pai
+            de w(avó de v) é negro. Se u, o irmão de w
+            (tio de v) é rubro, ainda é possível manter o
+            critério IV apenas fazendo a re-coloração de
+            t(Rubro),u(Negro) e w(Negro) */
+            if(t.isBlack() && u.isRed()) {
+                recolorCase2(z);
+                if(t.getParent().isRed()) {
+                    recolorCase2(t);
+                }
             }
         }
 
+    }
+
+    private void recolorCase2(RedBlackNode v) {
+        RedBlackNode w = v.getParent();
+        RedBlackNode t = w.getParent();
+        RedBlackNode u = t.getLeft() == w  ? t.getRight() : t.getLeft();
+
+        t.setRed();
+        w.setBlack();
+        u.setBlack();
     }
 
     @Override

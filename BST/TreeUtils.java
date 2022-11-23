@@ -13,11 +13,11 @@ public class TreeUtils {
 
 
     private static void inOrderCollect(Node n, Integer h) {
-        if(n != null) {
-          inOrderCollect(n.getLeft(), h + 1);
-          nodes.add(n);
-          heightIndexes.add(h);
-          inOrderCollect(n.getRight(), h + 1);
+        if(n != null || (n instanceof RedBlackNode && !((RedBlackNode) n).isNIL())) {
+            inOrderCollect(n.getLeft(), h + 1);
+            nodes.add(n);
+            heightIndexes.add(h);
+            inOrderCollect(n.getRight(), h + 1);
         }
     }
 

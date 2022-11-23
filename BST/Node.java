@@ -40,5 +40,9 @@ public class Node {
 		this.parent = parent;
 	}
 
+	public RedBlackNode toRedBlack() {
+		return RedBlackNode.Builder(this.data, this.left, this.right, this.parent);
+	}
+
     
 }

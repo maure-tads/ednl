@@ -1,11 +1,11 @@
 public class Teste {
-  private int n;
+  private static int n;
   
-  public Teste(int a) {
-    this.n = a;
+  public static void sum(int a, int b) {
+    n = a + b;
   }
 
-  public boolean compare(Teste k) {
-    return k == this;
+  public static int getSum() {
+    return n;
   }
 }
